@@ -3,7 +3,8 @@ formUI <- function(id, label, button_label = "Submit", input_list = NULL, max_in
 
   ns <- shiny::NS(id)
   addResourcePath(prefix = "downloadInfo", directoryPath = system.file("js", package = "dsmodules"))
-  bt <- div(shiny::singleton(
+  bt <- div(id = ns("form_button_div"),
+            shiny::singleton(
     shiny::tags$body(shiny::tags$script(src = "downloadInfo/downloadGen.js"))),
     style = "text-align: center; display: flex; align-items: baseline; margin-top: 20px;",
     actionButton(ns("form_button"), button_label, style = "margin: 10px 0;"),
@@ -19,7 +20,8 @@ formUI <- function(id, label, button_label = "Submit", input_list = NULL, max_in
 
   input_ns <- lapply(input_list, updateInputNS, ns)
 
-  inputs <- div(class = "flex-container",
+  inputs <- div(id = ns("form_inputs_div"),
+                class = "flex-container",
                 style = "display: flex; flex-direction: column; justify-content: flex-start;",
                 tagList(input_ns))
 
@@ -27,7 +29,8 @@ formUI <- function(id, label, button_label = "Submit", input_list = NULL, max_in
     inputs_left <- input_ns[1:max_inputs_first_column]
     inputs_right <- input_ns[max_inputs_first_column + 1 : length(input_ns)]
 
-    inputs <- div(class = "flex-container",
+    inputs <- div(id = ns("form_inputs_div"),
+                  class = "flex-container",
                   style = "display: flex; flex-direction: row; justify-content: space-between;",
                   div(class = "flex-left",
                       style = "width: 47%;",
